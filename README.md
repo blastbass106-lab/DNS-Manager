@@ -1,7 +1,7 @@
 # DNS Manager
 This is my first script to automate my Install for a DNS Server with the option to choose between Debain 13 (Trixie) and Fedora
 
-# BIND9 DNS Manager & Zap Tracker
+# BIND9 DNS Manager
 
 A robust, menu-driven Bash script designed to automate the installation, configuration, and management of a BIND9 DNS server on Debian (Trixie/Sid) and Fedora systems.
 This tool was specifically developed to handle the transition from DHCP to Static IP while providing a "Zap Journal" to track deployment events for system auditing and personal sanity.
