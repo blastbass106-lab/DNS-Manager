@@ -192,9 +192,31 @@ EOF
             ;;
 
         4)
-            echo "--- DNS ENTRIES ($DOMAIN) ---"
-            [ -f "$BIND_DIR/zones/db.$DOMAIN" ] && grep "IN[[:space:]]\+A" "$BIND_DIR/zones/db.$DOMAIN" | awk '{print $1"."$DOMAIN " -> " $4}' || echo "No zone file."
-            read -p "Press Enter..."
+            echo "------------------------------------------"
+            echo "   CURRENT DNS ENTRIES ($DOMAIN)"
+            echo "------------------------------------------"
+            printf "%-25s %-15s\n" "FQDN" "IP ADDRESS"
+            echo "------------------------------------------"
+            if [ -f "$BIND_DIR/zones/db.$DOMAIN" ]; then
+                # This filter targets lines with 'IN A' and cleans up the hostname
+                grep "IN[[:space:]]\+A" "$BIND_DIR/zones/db.$DOMAIN" | while read -r line; do
+                    H=$(echo "$line" | awk '{print $1}')
+                    I=$(echo "$line" | awk '{print $4}')
+                    
+                    # Logic: If the hostname already contains the domain, don't append it again
+                    if [[ "$H" == *"$DOMAIN"* ]]; then
+                        FULL_HOST="$H"
+                    else
+                        FULL_HOST="$H.$DOMAIN"
+                    fi
+                    
+                    printf "%-25s %-15s\n" "$FULL_HOST" "$I"
+                done
+            else
+                echo "No zone file found for $DOMAIN"
+            fi
+            echo "------------------------------------------"
+            read -p "Press Enter to return to menu..."
             ;;
 
         0) exit 0 ;;
