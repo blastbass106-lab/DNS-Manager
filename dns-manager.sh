@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LOG_FILE="zap_tracker.log"
+LOG_FILE="Audit.log"
 
 # --- 1. Bootstrap DNS ---
 echo "Bootstrapping DNS to allow package downloads..."
@@ -57,7 +57,7 @@ while true; do
     case $CHOICE in
         1)
             # Log the start for your Zap/Sanity tracker
-            echo "[$(date)] START: Installation on $OS. (Zap Journal)" >> "$LOG_FILE"
+            echo "[$(date)] START: Installation on $OS." >> "$LOG_FILE"
 
             if [ "$OS" == "Debian" ]; then
                 sudo apt-get update -y
@@ -168,7 +168,7 @@ EOF
             fi
             sudo rm -f /etc/resolv.conf
             sudo ip link set $INTERFACE down && sudo ip link set $INTERFACE up        
-            echo "[$(date)] UNINSTALL: Clean purge completed. (Zap Tracker)" >> "$LOG_FILE"
+            echo "[$(date)] UNINSTALL: Clean purge completed." >> "$LOG_FILE"
             read -p "Press Enter..." PAUSE
             ;;
 
